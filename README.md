@@ -2,92 +2,147 @@
 
 > **Search 115 declassified UFO documents instantly** - FBI files, military reports, government correspondence, and more.
 
-![UFO](https://img.shields.io/badge/UFO-Search-blue) ![Python](https://img.shields.io/badge/Python-Flask-green) ![Source](https://img.shields.io/badge/Source-war.gov/ufo-orange)
-
-## 📦 Data Source
-
-All documents sourced from [war.gov/ufo](https://war.gov/ufo) - Official declassified UFO records.
+**Source:** [war.gov/ufo](https://war.gov/ufo) | **License:** Public Domain
 
 ---
 
-## 📁 What's Included
+## ⚡ Quick Start (5 Minutes)
 
-### Documents (115 PDFs - 2.2 GB)
-- FBI case files and memos
-- Air Force incident reports
-- Military radar observations
-- Congressional correspondence
-- NASA astronaut debriefings
-- Declassified CIA/FBI documents
+### Step 1: Download Everything
 
-### Search Features
-- ✅ Full-text search across ALL documents
-- ✅ OCR text from scanned pages
-- ✅ Image search with extracted text
-- ✅ Highlighted search results
-- ✅ Click images to view full-size
+**1A. Get the code (from GitHub)**
+```bash
+git clone https://github.com/jasonscompshop/ufo-search-app.git
+cd ufo-search-app
+```
 
-### Technical
-- **Flask** web application
-- **SQLite** database (pre-indexed)
-- **pytesseract** for OCR
-- **pymupdf** for PDF processing
+**1B. Get the images (from Mega)**
+- Go to: **https://mega.nz/folder/fOxmiSyB#UubvIy6_ncbz1YleY33jvA**
+- Download the `extracted_images` folder
+- Place it inside: `ufo-search-app/static/extracted_images/`
 
----
+Your folder should look like:
+```
+ufo-search-app/static/extracted_images/0001.jpg
+                                         0002.jpg
+                                         ...
+```
 
-## 🛠️ Setup Requirements
-
-| Requirement | Installation |
-|-------------|--------------|
-| Python 3.8+ | [python.org](https://python.org) |
-| Tesseract OCR | [Install Guide](https://github.com/tesseract-ocr/tesseract) |
-| pip packages | `pip install -r requirements.txt` |
-
----
-
-## 🌐 Network Access
-
-Access from other devices on your network:
+### Step 2: Install Python Dependencies
 
 ```bash
-# Find your IP
+pip install -r requirements.txt
+```
+
+### Step 3: Install Tesseract OCR
+
+| Your Computer | Command to Run |
+|---------------|----------------|
+| **Mac** | `brew install tesseract` |
+| **Windows** | [Download installer](https://github.com/UB-Mannheim/tesseract/wiki) then run it |
+| **Linux** | `sudo apt install tesseract-ocr` |
+
+### Step 4: Run the App
+
+```bash
+python app.py
+```
+
+### Step 5: Open Your Browser
+
+Go to: **http://localhost:5000**
+
+That's it! 🎉
+
+---
+
+## 📱 Access From Other Devices
+
+Want to view it on your phone or other computer?
+
+**1. Find your IP address:**
+```bash
+# Mac/Linux:
 ifconfig | grep "inet " | grep -v 127.0.0.1
 
-# Connect from other devices
+# Windows:
+ipconfig
+```
+
+**2. On the other device, go to:**
+```
 http://YOUR_IP:5000
 ```
 
----
-
-## 📊 Stats
-
-- **115** documents
-- **3,960** pages indexed
-- **4,000+** images extracted
-- **1.5M+** words searchable
+Example: If your IP is `192.168.1.100`, then go to `http://192.168.1.100:5000`
 
 ---
 
-## 📂 Project Structure
+## 🔧 Troubleshooting
 
+### "pip: command not found"
+```bash
+python3 -m pip install -r requirements.txt
 ```
-ufo-search-app/
-├── PDFs/                    # All 115 original PDFs
-├── app.py                  # Flask web app
-├── index_pdfs.py           # PDF indexing script
-├── requirements.txt        # Python dependencies
-├── ufo_index.db            # Pre-indexed database
-├── static/
-│   └── extracted_images/    # Download separately from Mega
-└── templates/               # HTML interface
+
+### "Tesseract not found"
+Make sure you installed Tesseract and restarted your terminal.
+
+### "Port 5000 is already in use"
+```bash
+python app.py --port 5001
 ```
+Then go to `http://localhost:5001`
+
+### Images not showing
+Make sure the `extracted_images` folder is in:
+```
+ufo-search-app/static/extracted_images/
+```
+
+---
+
+## 📂 What You Get
+
+| Item | Description |
+|------|-------------|
+| **115 PDFs** | Original declassified documents |
+| **4000+ Images** | Extracted from all pages |
+| **Pre-indexed Search** | Instant full-text search |
+| **OCR Text** | Searchable text from images |
+
+---
+
+## 🛠️ Adding Your Own PDFs
+
+1. Put new PDF files in `~/UFO_Files/`
+2. Run:
+```bash
+python index_pdfs.py
+```
+3. Restart the app:
+```bash
+python app.py
+```
+
+---
+
+## 📊 Search Features
+
+- ✅ Search all 115 documents
+- ✅ Highlighted results (see where your search terms appear)
+- ✅ Click images to view full-size
+- ✅ Browse by document
+- ✅ Image OCR search
 
 ---
 
 ## 🔐 Source
 
-All documents sourced from **[war.gov/ufo](https://war.gov/ufo)** - Official declassified UFO records obtained through FOIA requests and public disclosure programs.
+All documents from [war.gov/ufo](https://war.gov/ufo) - Official declassified UFO records.
 
 ---
 
-*Built with Flask, OCR, and ♥ for the UFO research community*
+**Questions?** Open an issue on GitHub.
+
+*Built with Flask + OCR + ♥*
