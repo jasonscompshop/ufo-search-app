@@ -2,42 +2,11 @@
 
 > **Search 115 declassified UFO documents instantly** - FBI files, military reports, government correspondence, and more.
 
-![UFO](https://img.shields.io/badge/UFO-Search-blue) ![Python](https://img.shields.io/badge/Python-Flask-green) ![License](https://img.shields.io/badge/License-Public%20Domain-red)
+![UFO](https://img.shields.io/badge/UFO-Search-blue) ![Python](https://img.shields.io/badge/Python-Flask-green) ![Source](https://img.shields.io/badge/Source-war.gov/ufo-orange)
 
-## 🚀 Download Everything
+## 📦 Data Source
 
-This repo contains **everything you need** - just two downloads:
-
-| File | Size | Download |
-|------|------|----------|
-| **All Files (code + PDFs + database)** | ~2.5 GB | `git clone` this repo |
-| **Extracted Images (4000+)** | ~19 GB | [Download from Mega](https://mega.nz/folder/fOxmiSyB#UubvIy6_ncbz1YleY33jvA) |
-
-### Quick Setup (5 minutes)
-
-```bash
-# 1. Clone this repo
-git clone https://github.com/jasonscompshop/ufo-search-app.git
-cd ufo-search-app
-
-# 2. Download images from Mega
-#    Go to: https://mega.nz/folder/fOxmiSyB#UubvIy6_ncbz1YleY33jvA
-#    Download the extracted_images folder
-#    Place it in: static/extracted_images/
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Install Tesseract OCR (required for text extraction)
-#    Mac:     brew install tesseract
-#    Windows: https://github.com/UB-Mannheim/tesseract/wiki
-#    Linux:   sudo apt install tesseract-ocr
-
-# 5. Run!
-python app.py
-```
-
-Then open **http://localhost:5000** in your browser.
+All documents sourced from [war.gov/ufo](https://war.gov/ufo) - Official declassified UFO records.
 
 ---
 
@@ -117,7 +86,7 @@ ufo-search-app/
 
 ## 🔐 Source
 
-All documents are **official declassified government records** obtained through FOIA requests and public disclosure programs.
+All documents sourced from **[war.gov/ufo](https://war.gov/ufo)** - Official declassified UFO records obtained through FOIA requests and public disclosure programs.
 
 ---
 
