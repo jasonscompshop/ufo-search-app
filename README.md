@@ -2,65 +2,83 @@
 
 A Flask web application for searching and browsing declassified UFO documents with full-text search, OCR, and image extraction.
 
-**Includes pre-indexed database with 115 documents, 3960 pages, and 4000+ extracted images.**
+## What's Included
 
-## Quick Start
+- **115 original PDF documents** - all government declassified files
+- **Pre-indexed database** - instant search, no setup needed
+- **4000+ extracted images** - with OCR text (see Mega download below)
+- **Full-text search** - across all documents and images
 
+## Quick Setup
+
+### 1. Clone the repo
 ```bash
-# 1. Install dependencies
+git clone https://github.com/jasonscompshop/ufo-search-app.git
+cd ufo-search-app
+```
+
+### 2. Download images (Mega.nz)
+Download the extracted images folder from:
+**https://mega.nz/folder/fOxmiSyB#UubvIy6_ncbz1YleY33jvA**
+
+After download, place the `static/extracted_images/` folder in the project directory so it looks like:
+```
+ufo-search-app/static/extracted_images/
+```
+
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
-# 2. Install Tesseract OCR
-# Mac: brew install tesseract
-# Windows: https://github.com/UB-Mannheim/tesseract/wiki
-# Linux: sudo apt install tesseract-ocr
+### 4. Install Tesseract OCR
+- **Mac:** `brew install tesseract`
+- **Windows:** https://github.com/UB-Mannheim/tesseract/wiki
+- **Linux:** `sudo apt install tesseract-ocr`
 
-# 3. Run the app
+### 5. Run the app
+```bash
 python app.py
 ```
 
 Open **http://localhost:5000** in your browser.
 
-## What's Included
-
-- **Pre-indexed database** (`ufo_index.db`) - 115 UFO documents ready to search
-- **Extracted images** (`static/extracted_images/`) - 4000+ images with OCR text
-- **Flask web app** - dark theme UI with search, browse, and image viewer
-
 ## Features
 
-- Full-text search across all documents
+- Full-text search across all 115 documents
 - OCR text extraction from scanned pages and images
-- Click images to open full-size version
+- Click images to view full-size version
 - Browse by document or search by keyword
 - Modern dark theme interface
-
-## Adding More PDFs
-
-Want to add your own PDFs? Add them to `~/UFO_Files/` and run:
-```bash
-python index_pdfs.py
-```
+- Works on local network (for other devices)
 
 ## Network Access
 
-To access from other devices on your network, find your IP:
+To access from other devices:
 ```bash
 ifconfig | grep "inet " | grep -v 127.0.0.1
 ```
-Then connect to `http://YOUR_IP:5000`.
+Then connect to `http://YOUR_IP:5000`
+
+## Adding More PDFs
+
+Place new PDFs in `~/UFO_Files/` and run:
+```bash
+python index_pdfs.py
+```
 
 ## Project Structure
 
 ```
 ufo-search-app/
-├── app.py              # Flask web application
-├── index_pdfs.py       # PDF indexing script with OCR
-├── requirements.txt    # Python dependencies
-├── ufo_index.db        # Pre-indexed database (115 docs)
+├── PDFs/              # 115 original PDF documents
+├── app.py             # Flask web application
+├── index_pdfs.py      # PDF indexing script with OCR
+├── requirements.txt   # Python dependencies
+├── ufo_index.db       # Pre-indexed database
 ├── static/
-│   └── extracted_images/  # 4000+ extracted images
-└── templates/          # HTML templates
+│   └── extracted_images/  # Extracted images (download from Mega)
+└── templates/         # HTML templates
 ```
 
 ## Requirements
@@ -68,3 +86,7 @@ ufo-search-app/
 - Python 3.8+
 - Tesseract OCR
 - Flask, pymupdf, pytesseract, Pillow, pandas
+
+## License
+
+Declassified government documents - public domain records.
