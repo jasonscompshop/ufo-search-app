@@ -1,8 +1,8 @@
 # 🔍 UFO Document Search Engine
 
-> **Search 115 declassified UFO documents instantly** - FBI files, military reports, government correspondence, and more.
+> **Search 115 declassified UFO documents instantly** - from the latest government release at war.gov/ufo
 
-**Source:** [war.gov/ufo](https://war.gov/ufo) | **License:** Public Domain
+**Source:** [war.gov/ufo](https://war.gov/ufo) | **115 PDFs • 4,000+ Images • Pre-indexed & Searchable**
 
 ---
 
@@ -139,7 +139,7 @@ python app.py
 
 ## 🔐 Source
 
-All documents from [war.gov/ufo](https://war.gov/ufo) - Official declassified UFO records.
+All documents from **[war.gov/ufo](https://war.gov/ufo)** - Latest government UFO disclosure release containing FBI files, military reports, Air Force documents, and more.
 
 ---
 
