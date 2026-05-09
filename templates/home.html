@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero">
+    <h1>Search Declassified Files</h1>
+    <p>Explore UFO reports, sightings, and government documents</p>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <div class="number">{{ doc_count }}</div>
+        <div class="label">Documents</div>
+    </div>
+    <div class="stat">
+        <div class="number">{{ page_count }}</div>
+        <div class="label">Pages</div>
+    </div>
+    <div class="stat">
+        <div class="number">{{ img_count }}</div>
+        <div class="label">Images</div>
+    </div>
+</div>
+
+<div class="search-container">
+    <input type="text" id="search-input" class="search-input" placeholder="Search for anything...">
+    <button onclick="performSearch()" class="search-btn">Search</button>
+</div>
+
+<div class="results-section">
+    <div class="results-header">
+        <span class="results-count" id="results-count"></span>
+    </div>
+    <div id="results">
+        <div class="empty-state">
+            <h3>Start your search</h3>
+            <p>Enter keywords to find documents and images</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function highlightText(text, query) {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('(' + escaped + ')', 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+function performSearch() {
+    const query = document.getElementById('search-input').value.trim();
+    
+    document.getElementById('results-count').textContent = 'Loading...';
+    
+    fetch('/search?q=' + encodeURIComponent(query))
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('results-count').textContent = data.length + ' results';
+            
+            if (data.length === 0) {
+                document.getElementById('results').innerHTML = `
+                    <div class="empty-state">
+                        <h3>No results found</h3>
+                        <p>Try different keywords</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            document.getElementById('results').innerHTML = data.map(item => `
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-title">
+                            <a href="/file/${item.filename}">${item.title || item.filename}</a>
+                        </div>
+                        <span class="result-type ${item.result_type || 'page'}">${item.result_type === 'image' ? 'Image' : 'Page ' + item.page_number}</span>
+                    </div>
+                    <div class="result-meta">
+                        <span>📄 ${item.filename}</span>
+                        <span>🏢 ${item.agency}</span>
+                    </div>
+                    <div class="result-preview">${highlightText(item.preview || 'No preview available', query)}</div>
+                    <div class="result-actions">
+                        <a href="${item.pdf_url}" target="_blank" class="btn">View PDF</a>
+                    </div>
+                </div>
+            `).join('');
+        })
+        .catch(err => {
+            console.error('Search error:', err);
+        });
+}
+
+// Load all documents by default when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    performSearch();
+});
+
+// Allow Enter key to trigger search
+document.getElementById('search-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') performSearch();
+});
+</script>
+{% endblock %}

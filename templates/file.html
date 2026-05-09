@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/" class="btn" style="margin-bottom: 24px; display: inline-flex;">← Back to Search</a>
+
+{% if doc %}
+<div class="result-card" style="margin-bottom: 24px;">
+    <div class="result-header">
+        <div class="result-title" style="font-size: 1.5rem;">{{ doc['title'] or doc['filename'] }}</div>
+    </div>
+    <div class="result-meta" style="margin-top: 12px;">
+        <span>📄 {{ doc['filename'] }}</span>
+        <span>🏢 {{ doc['agency'] }}</span>
+        <span>📅 {{ doc['date'] or 'Unknown' }}</span>
+    </div>
+    <p style="color: var(--text-secondary); margin-top: 12px;">{{ doc['description'] }}</p>
+    <div class="result-actions" style="margin-top: 16px;">
+        <a href="/pdf/{{ doc['filename'] }}" target="_blank" class="btn">📄 Open PDF</a>
+    </div>
+</div>
+
+<div style="display: flex; gap: 24px; margin-bottom: 32px;">
+    <div class="stat">
+        <div class="number">{{ pages|length }}</div>
+        <div class="label">Pages</div>
+    </div>
+    <div class="stat">
+        <div class="number">{{ images|length }}</div>
+        <div class="label">Images</div>
+    </div>
+</div>
+
+{% if pages %}
+<h3 style="margin-bottom: 16px; color: var(--text-secondary); font-size: 1.1rem;">Page Content</h3>
+{% for page in pages %}
+<div class="result-card">
+    <div class="result-meta">
+        <span>📑 Page {{ page['page_number'] }}</span>
+        <span>{{ page['word_count']|default(0) }} words</span>
+    </div>
+    <div class="result-preview" style="white-space: pre-wrap;">{{ (page['text_combined'] or page['text_direct'] or '')[:500] }}{% if page['text_combined']|length > 500 or page['text_direct']|length > 500 %}...{% endif %}</div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if images %}
+<h3 style="margin: 32px 0 16px; color: var(--text-secondary); font-size: 1.1rem;">Extracted Images</h3>
+<div class="images-grid" id="file-images-grid">
+    {% for img in images %}
+    {% set img_name = img['image_path'].split('/')[-1] %}
+    <div class="image-card" data-img="/extracted_images/{{ img_name }}">
+        <img src="/extracted_images/{{ img_name }}" alt="Page {{ img['page_number'] }}" style="cursor: pointer;">
+        <div class="info">
+            <p>Page {{ img['page_number'] }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+document.getElementById('file-images-grid')?.addEventListener('click', function(e) {
+    var card = e.target.closest('.image-card');
+    if (card) {
+        var imgUrl = card.getAttribute('data-img');
+        if (imgUrl) {
+            window.open(imgUrl, '_blank');
+        }
+    }
+});
+</script>
+
+{% else %}
+<div class="empty-state">
+    <h3>Document not found</h3>
+    <p>Indexing may still be in progress</p>
+</div>
+{% endif %}
+{% endblock %}

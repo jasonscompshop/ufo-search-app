@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 32px; font-size: 1.5rem;">Extracted Images</h2>
+
+<div id="results-count" style="color: var(--text-secondary); margin-bottom: 16px;">{{ images|length }} images</div>
+
+<div class="search-container">
+    <input type="text" id="image-search-input" class="search-input" placeholder="Search within image OCR text...">
+    <button onclick="searchImages()" class="search-btn">Search</button>
+</div>
+
+<div class="images-grid" id="images-grid">
+    {% for img in images %}
+    {% set img_name = img['image_path'].split('/')[-1] %}
+    <div class="image-card" data-text="{{ img['text_ocr'] or '' }}" data-img="/extracted_images/{{ img_name }}">
+        <img src="/extracted_images/{{ img_name }}" alt="Image" style="cursor: pointer;"
+             onerror="this.style.display='none'">
+        <div class="info">
+            <p><a href="/file/{{ img['filename'] }}">{{ img['filename'] }}</a></p>
+            <p>Page {{ img['page_number'] }}</p>
+            {% if img['text_ocr'] %}
+            <p class="ocr-text" style="font-size: 0.75rem; color: var(--accent); margin-top: 8px; word-break: break-all;">
+                OCR: {{ img['text_ocr'][:150] }}{% if img['text_ocr']|length > 150 %}...{% endif %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.getElementById('images-grid').addEventListener('click', function(e) {
+    var card = e.target.closest('.image-card');
+    if (card && !e.target.closest('a')) {
+        var imgUrl = card.getAttribute('data-img');
+        if (imgUrl) {
+            window.open(imgUrl, '_blank');
+        }
+    }
+});
+
+function searchImages() {
+    const query = document.getElementById('image-search-input').value.trim().toLowerCase();
+    const cards = document.querySelectorAll('.image-card');
+    let matchCount = 0;
+    
+    cards.forEach(card => {
+        const text = card.getAttribute('data-text') || '';
+        if (!query || text.toLowerCase().includes(query)) {
+            card.style.display = 'block';
+            if (query) matchCount++;
+            
+            const ocrP = card.querySelector('.ocr-text');
+            if (ocrP && query) {
+                const originalText = card.getAttribute('data-text') || '';
+                const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                ocrP.innerHTML = 'OCR: ' + originalText.replace(regex, '<mark>$1</mark>');
+            }
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    if (query) {
+        document.getElementById('results-count').textContent = matchCount + ' images match "' + query + '"';
+    } else {
+        document.getElementById('results-count').textContent = cards.length + ' images';
+    }
+}
+
+document.getElementById('image-search-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') searchImages();
+});
+</script>{% endblock %}
