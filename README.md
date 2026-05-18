@@ -1,8 +1,8 @@
 # 🔍 UFO Document Search Engine
 
-> **Search 115 declassified UFO documents instantly** - from the latest government release at war.gov/ufo
+> **Search 115 declassified UFO documents instantly** - from the latest government release at archive.war.gov/ufo
 
-**Source:** [war.gov/ufo](https://war.gov/ufo) | **115 PDFs • 4,000+ Images • Pre-indexed & Searchable**
+**Source:** [archive.war.gov/ufo](https://archive.war.gov/ufo) | **115+ PDFs • Full-text Search**
 
 ---
 
@@ -16,17 +16,19 @@ git clone https://github.com/jasonscompshop/ufo-search-app.git
 cd ufo-search-app
 ```
 
-**1B. Get the images (from Mega)**
-- Go to: **https://mega.nz/folder/fOxmiSyB#UubvIy6_ncbz1YleY33jvA**
-- Download the `extracted_images` folder
-- Place it inside: `ufo-search-app/static/extracted_images/`
+**1B. Get the files**
+- Go to: **https://archive.war.gov/ufo**
+- Click "Download All" to get all PDF files
+- Extract the ZIP and copy all PDF files to: `~/UFO_Files/`
 
 Your folder should look like:
 ```
-ufo-search-app/static/extracted_images/0001.jpg
-                                         0002.jpg
-                                         ...
+~/UFO_Files/65_hs1-834228961_62-hq-83894_section_9.pdf
+                       dow-uap-d10-mission-report-middle-east-may-2022.pdf
+                       ...
 ```
+
+The repo already includes a pre-indexed database (`ufo_index.db`) with all 115 documents searchable out of the box! Skip to Step 2.
 
 ### Step 2: Install Python Dependencies
 
@@ -94,11 +96,8 @@ python app.py --port 5001
 ```
 Then go to `http://localhost:5001`
 
-### Images not showing
-Make sure the `extracted_images` folder is in:
-```
-ufo-search-app/static/extracted_images/
-```
+### No results showing
+Make sure your PDFs are in `~/UFO_Files/` - the database uses filenames to link to the files.
 
 ---
 
@@ -106,17 +105,16 @@ ufo-search-app/static/extracted_images/
 
 | Item | Description |
 |------|-------------|
-| **115 PDFs** | Original declassified documents |
-| **4000+ Images** | Extracted from all pages |
-| **Pre-indexed Search** | Instant full-text search |
-| **OCR Text** | Searchable text from images |
+| **115+ PDFs** | Original declassified documents |
+| **Pre-indexed Search** | Database included - search immediately |
+| **4,000+ Images** | Extracted & OCR'd from all pages |
 
 ---
 
 ## 🛠️ Adding Your Own PDFs
 
 1. Put new PDF files in `~/UFO_Files/`
-2. Run:
+2. Run the indexer:
 ```bash
 python index_pdfs.py
 ```
@@ -125,21 +123,22 @@ python index_pdfs.py
 python app.py
 ```
 
+This extracts text and embedded images from all PDFs.
+
 ---
 
 ## 📊 Search Features
 
-- ✅ Search all 115 documents
+- ✅ Search all 115 documents instantly
 - ✅ Highlighted results (see where your search terms appear)
-- ✅ Click images to view full-size
 - ✅ Browse by document
-- ✅ Image OCR search
+- ✅ 4,000+ images with OCR text searchable
 
 ---
 
 ## 🔐 Source
 
-All documents from **[war.gov/ufo](https://war.gov/ufo)** - Latest government UFO disclosure release containing FBI files, military reports, Air Force documents, and more.
+All documents from **[archive.war.gov/ufo](https://archive.war.gov/ufo)** - Latest government UFO disclosure release containing FBI files, military reports, Air Force documents, and more.
 
 ---
 
